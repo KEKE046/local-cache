@@ -50,9 +50,7 @@ async function run(): Promise<void> {
     core.setOutput('cache-hit', String(cacheHit))
 
     if (cacheHit === true) {
-      const ln = await exec(
-        `ln -s ${p.join(cachePath, path.split('/').slice(-1)[0])} ./${path}`
-      )
+      const ln = await exec(`rm -rf ./${path} && ln -sf ${p.join(cachePath, path.split('/').slice(-1)[0])} ./${path}`)
 
       core.debug(ln.stdout)
       if (ln.stderr) core.error(ln.stderr)
